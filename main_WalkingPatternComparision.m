@@ -1,24 +1,44 @@
-%% Housekeeping
+% Project Name: Walking Pattern Comparision
+% This is to compute the sensor position according .h5 file
+% This tool could remove noise signal in walking track sensor and then using
+% accelerometer and accelerometer to compute x,y,z coordinate position 
+
+% For more information see:
+%   https://x-io.co.uk/oscillatory-motion-tracking-with-x-imu/
+
+%% Path Config and Housekeeping
  
-addpath('ximu_matlab_library');	% include x-IMU MATLAB library
-addpath('quaternion_library');	% include quatenrion library
-close all;                     	% close all figures
-clear;                         	% clear all variables
-clc;                          	% clear the command terminal
- 
+addpath('${PROJECTPATH}/Oscillatory-Motion-Tracking-With-x-IMU/ximu_matlab_library');	% include x-IMU MATLAB library
+addpath('${PROJECTPATH}/Oscillatory-Motion-Tracking-With-x-IMU/quaternion_library');	% include quatenrion library
+filename='${PROJECTPATH}/Oscillatory-Motion-Tracking-With-x-IMU/${.h5FILENAME}';
+datasetname_acc = '/Sensors/${36XXCODE}/Accelerometer';
+datasetname_gyr = '/Sensors/${36XXCODE}/Gyroscope';
+samplePeriod = 1/128;
+endtime =[1 46719];
+% close all;                     	% close all figures
+% clear;                         	% clear all variables
+% clc;                          	% clear the command terminal
+%  
 %% Import data
 
-xIMUdata = xIMUdataClass('LoggedData/LoggedData');
+x_acc_data = h5read(filename,datasetname_acc,[1 1], endtime).';
+y_acc_data = h5read(filename,datasetname_acc,[2 1], endtime).';
+z_acc_data = h5read(filename,datasetname_acc,[3 1], endtime).';
 
-samplePeriod = 1/256;
 
-gyr = [xIMUdata.CalInertialAndMagneticData.Gyroscope.X...
-       xIMUdata.CalInertialAndMagneticData.Gyroscope.Y...
-       xIMUdata.CalInertialAndMagneticData.Gyroscope.Z];        % gyroscope
-acc = [xIMUdata.CalInertialAndMagneticData.Accelerometer.X...
-       xIMUdata.CalInertialAndMagneticData.Accelerometer.Y...
-       xIMUdata.CalInertialAndMagneticData.Accelerometer.Z];	% accelerometer
-  
+% attval = h5readatt(filename, datasetname, attributename)
+x_gyro_data = h5read(filename,datasetname_gyr,[1 1], endtime).';
+y_gyro_data = h5read(filename,datasetname_gyr,[2 1], endtime).';
+z_gyro_data = h5read(filename,datasetname_gyr,[3 1], endtime).';
+
+gyr = [x_gyro_data...
+       y_gyro_data...
+       z_gyro_data];        % gyroscope
+acc = [x_acc_data...
+       y_acc_data...
+       z_acc_data];	% accelerometer
+
+
 % Plot
 figure('NumberTitle', 'off', 'Name', 'Gyroscope');
 hold on;
