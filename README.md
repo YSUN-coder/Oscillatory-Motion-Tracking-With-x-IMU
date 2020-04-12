@@ -7,13 +7,13 @@
 # Oscillatory motion tracking
 ## Data Source:  Accelerometer and Gyroscope measurements from sensors
 ## Data Processing:
-Process data through AHRS algorithm (calcualte orientation) -> R
-Calculate 'tilt-compensated' accelerometer -> tcAcc
-Calculate linear acceleration in Earth frame (subtracting gravity) -> linAcc
-Calculate linear velocity (integrate acceleartion) -> linVel
-High-pass filter linear velocity to remove drift -> linVelHP
-Calculate linear position (integrate velocity) -> linPos
-High-pass filter linear position to remove drift -> linPosHP
+* Process data through AHRS algorithm (calcualte orientation) -> R
+* Calculate 'tilt-compensated' accelerometer -> tcAcc
+* Calculate linear acceleration in Earth frame (subtracting gravity) -> linAcc
+* Calculate linear velocity (integrate acceleartion) -> linVel
+* High-pass filter linear velocity to remove drift -> linVelHP
+* Calculate linear position (integrate velocity) -> linPos
+* High-pass filter linear position to remove drift -> linPosHP
 
 # Reference:
 For more information see:
